@@ -1,0 +1,15 @@
+import multiprocessing
+
+# Anzahl der Worker-Prozesse
+workers = {{ remotedir_api_worker_count }}
+
+# Worker-Klasse
+worker_class = "uvicorn.workers.UvicornWorker"
+
+# Binden an alle Schnittstellen auf Port 8080
+bind = "0.0.0.0:8080"
+
+# Protokollierung
+loglevel = "info"
+accesslog = "-"  # "-" bedeutet stdout
+errorlog = "-"   # "-" bedeutet stderr
