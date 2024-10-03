@@ -12,7 +12,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 #servervars
 server_url="https://sysman.marksys.de:443/rdir/api"
 verify_ssl=False
-server_auth=HTTPBasicAuth("windows","Y61ZOxXXLOmXCiDsXE7h00sRBDgi9UgJ0N9eIlRQD0")
+server_auth=HTTPBasicAuth("windows","PW")
 
 alloy_config_rootdir = "D:\\Grafana-Alloy"
 tmp_dir = "D:\\temp"  # tmp dir for rpm download # not rly used except for the WAL
