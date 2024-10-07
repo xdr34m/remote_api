@@ -1,0 +1,64 @@
+## DO NOT CHANGE WHILE INSTALLED! or -deinstall/-reinstall wont work correctly
+## also unpredictable sideeffects to running Instance
+## if var has #CHANGEABLEinPROD it can be changed ;)
+general:
+  client_type: "rhel" #one of managed_rhel, managed_win, rhel, win, ubuntu # this reflects the files got from the API!
+  client_directory: "/etc/alloy"
+  rand_delay_executing_s: 600 # delay execution randomly between 0 to 600 seconds
+  updater_client_name: "alloy_updater_client"
+  build_type: "amd64_rpm" #supported are amd64_exe, amd64_rpm
+  rand_sleep_on_exe: "10m" #golang duration #CHANGEABLEinPROD
+  sync_dirs: #DONOT CHANGE
+    - config
+    - scripts 
+    - files
+api:
+  verify_ssl: false
+  base_url: "http://127.0.0.1:8000/rdir/api" #CHANGEABLEinPROD
+  #basic_auth: #CHANGEABLEinPROD
+   # username: "supersave" #CHANGEABLEinPROD
+    #password: "somestring" #CHANGEABLEinPROD
+
+alloy:
+  port: 10310
+  interface_ip: "127.0.0.1"
+  sysconfig_file: "/etc/sysconfig/alloy" #cant be changed
+  service_name: "alloy.service" #cant be changed
+  working_dir: "/var/lib/alloy" #std cant be changed atm #unused
+  max_bootup_duration: "10s" #used to check if app is serving #CHANGEABLEinPROD
+  linux: #dont change
+    sysconfig_file: "/etc/sysconfig/alloy"
+    rpm_name: "alloy"
+    version_pattern: 'v?(\d+\.\d+\.\d+)'
+
+script_exporter:
+  interface_ip: "127.0.0.1"
+  port: 10311
+  hardconfig_file: "/etc/alloy/files/std_script_exporter_config.yaml" #only change the base dir if changed
+  service_name: "script_exporter.service" #dont care
+  max_bootup_duration: "10s" #used to check if app is serving
+  linux: #dont change!
+    sysconfig_file: "/etc/sysconfig/script_exporter.config"
+    rpm_name: "script_exporter"
+    version_pattern: 'v?(\d+\.\d+\.\d+)'
+
+linux:
+  tmp_dir: "/tmp"
+  username: "alloy"
+  gid: 2065
+  uid: 2065
+  cron: #if specified, writes to cron.d # os_team wants to do it by themselfs?
+    file: "/etc/cron.d/alloy_updater"
+    command: "/etc/alloy/alloy_updater_client"
+    schedule: "*/30 * * * *" # Every 30 minutes
+    user: "root"
+    comment: "alloy_updater_client"
+
+loggingStat: # this doesnt work and i dont know why xD! #default is stdout 
+  log_dir: "/var/log/alloy" #this is hardset on linux
+  log_file: "alloy_updater.log" #this is hardset on linux
+  max_size: 10 # 5 MB in MB #this is hardset on linux
+  backup_count: 2 #this is hardset on linux
+  max_age_days: 30 #this is hardset on linux
+
+
